@@ -14,7 +14,6 @@ import {
   Moon,
   ChevronRight
 } from "lucide-react";
-import { Button } from "../ui/button";
 import { useAuth } from "../../contexts/AuthContext";
 
 interface AdminLayoutProps {

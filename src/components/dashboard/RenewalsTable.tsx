@@ -157,7 +157,7 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
         <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outlineSecondary" className="flex items-center shadow-sm hover-effect">
+              <Button variant="outline" className="flex items-center shadow-sm hover-effect">
                 <span>{statusFilter === 'all'
                   ? 'All Statuses'
                   : statusFilter.charAt(0).toUpperCase() +
@@ -193,7 +193,7 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outlineInfo" className="flex items-center shadow-sm hover-effect">
+              <Button variant="outline" className="flex items-center shadow-sm hover-effect">
                 <span>Sort By</span>
                 <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
@@ -327,7 +327,7 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <Button
-                        variant="info"
+                        variant="default"
                         size="sm"
                         className="h-8 w-8 p-0 rounded-full shadow-sm hover:shadow-md transition-shadow"
                         onClick={(e) => {

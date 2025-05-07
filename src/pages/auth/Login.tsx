@@ -133,7 +133,6 @@ const Login = () => {
                 onCheckedChange={setIsAdmin}
                 disabled={isLoggingIn}
               />
-              <Label htmlFor="admin-mode">Admin Mode</Label>
             </div>
             <Button type="submit" className="w-full" disabled={isLoggingIn}>
               {isLoggingIn ? (
@@ -147,24 +146,6 @@ const Login = () => {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
-          <div className="text-sm text-center text-muted-foreground">
-            <a href="/forgot-password" className="underline underline-offset-4 hover:text-primary">
-              Forgot your password?
-            </a>
-          </div>
-          <div className="text-sm text-center text-muted-foreground">
-            Don't have an account?{" "}
-            <a href="/register" className="underline underline-offset-4 hover:text-primary">
-              Register
-            </a>
-          </div>
-          <div className="text-xs text-center text-muted-foreground mt-4">
-            <p>Demo Accounts:</p>
-            <p>Admin: admin@example.com / admin123</p>
-            <p>User: user@example.com / user123</p>
-          </div>
-        </CardFooter>
       </Card>
     </div>
   );

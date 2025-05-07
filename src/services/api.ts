@@ -176,7 +176,7 @@ export const authService = {
       const response = await api.get('/user/profile');
       return response.status === 200;
     } catch (error) {
-      if (error.response && error.response.status === 401) {
+      if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
         console.warn('Token validation failed: Unauthorized');
         return false;
       }
@@ -185,8 +185,12 @@ export const authService = {
       // This prevents logout on temporary network issues
       console.error('Token validation error:', error);
       // Return true to keep the user logged in if it's just a network issue
-      return !error.response;
+      return !(error as any).response;
     }
+  },
+  getUsers: async () => {
+    // Fetch users logic
+    return { users: [] }; // Replace with actual API call
   },
 };
 

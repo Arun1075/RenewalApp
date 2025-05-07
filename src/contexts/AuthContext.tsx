@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import { authService } from '../services/api';
 import type { User } from '../types';
 
@@ -62,7 +63,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       setIsLoading(true);
       // Call the API login service
-      const { user, token } = await authService.loginUser(email, password);
+      const { user } = await authService.loginUser(email, password);
       
       // Verify user role if in admin mode
       if (isAdminMode && user.role !== 'admin') {

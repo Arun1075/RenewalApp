@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  BarChart3, 
   Calendar, 
   CheckCircle2, 
   ClockIcon, 
   DollarSign, 
   Plus, 
   UserPlus, 
-  AlertTriangle,
-  Search
-} from 'lucide-react';
+  AlertTriangle} from 'lucide-react';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import StatsCard from '../../components/dashboard/StatsCard';
 import RenewalsTable from '../../components/dashboard/RenewalsTable';
@@ -20,7 +17,7 @@ import { authService } from '../../services/api';
 // Import runtime values from runtime file
 import { defaultRenewalStats } from '../../types/runtime';
 // Update import path to correctly point to the types file
-import type { User, Renewal, RenewalStats } from '../../types';
+import type { User, Renewal, RenewalStats, ApiResponse } from '../../types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../components/ui/dialog';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'react-hot-toast';
@@ -37,7 +34,7 @@ const AdminDashboard: React.FC = () => {
   const [formTitle, setFormTitle] = useState('Add New Renewal');
   const [editingRenewal, setEditingRenewal] = useState<Renewal | undefined>(undefined);
   
-  const { currentUser } = useAuth();
+  useAuth();
 
   useEffect(() => {
     const loadData = async () => {
@@ -110,7 +107,7 @@ const AdminDashboard: React.FC = () => {
   
   const handleFormSubmit = async (formData: Partial<Renewal>) => {
     try {
-      let response;
+      let response: ApiResponse<Renewal>;
       
       if (editingRenewal) {
         response = await renewalService.updateRenewal(editingRenewal.id, formData);
@@ -270,7 +267,7 @@ const AdminDashboard: React.FC = () => {
                 )}
               </div>
               
-              <Button variant="outlinePrimary" className="w-full mt-5 hover-effect">
+              <Button variant="outline" className="w-full mt-5 hover-effect">
                 <UserPlus className="mr-2 h-4 w-4" /> Add User
               </Button>
             </div>
@@ -381,15 +378,15 @@ const AdminDashboard: React.FC = () => {
             </div>
             
             <div className="flex justify-end space-x-3 mt-4">
-              <Button 
-                variant="outlineSecondary" 
+                <Button 
+                variant="outline" 
                 onClick={() => setIsViewDialogOpen(false)}
                 className="hover-effect"
-              >
+                >
                 Close
-              </Button>
+                </Button>
               <Button
-                variant="primary"
+                variant="default"
                 onClick={() => {
                   setIsViewDialogOpen(false);
                   handleEditRenewal(selectedRenewal);

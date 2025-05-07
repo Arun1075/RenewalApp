@@ -1,25 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Calendar, 
   Plus, 
-  Filter, 
-  Download,
-  MoreHorizontal,
-  Trash2,
   Edit,
-  Eye,
   AlertTriangle,
   Loader2
 } from 'lucide-react';
 import AdminLayout from '../../components/layouts/AdminLayout';
 import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from '../../components/ui/dropdown-menu';
 import RenewalsTable from '../../components/dashboard/RenewalsTable';
 import RenewalForm from '../../components/dashboard/RenewalForm';
 import type { Renewal } from '../../types';
@@ -296,10 +283,10 @@ const AdminRenewals: React.FC = () => {
             
             {selectedRenewal && (
               <div className="py-4">
-                <p className="font-medium">{selectedRenewal.serviceName}</p>
+                <p className="font-medium">{selectedRenewal.service_name}</p>
                 <p className="text-sm text-muted-foreground">Provider: {selectedRenewal.provider}</p>
                 <p className="text-sm text-muted-foreground">
-                  Expires: {format(new Date(selectedRenewal.endDate), 'MMMM d, yyyy')}
+                  Expires: {format(new Date(selectedRenewal.end_date), 'MMMM d, yyyy')}
                 </p>
               </div>
             )}
@@ -342,11 +329,11 @@ const AdminRenewals: React.FC = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground">Service</h3>
-                    <p className="font-semibold">{selectedRenewal.serviceName}</p>
+                    <p className="font-semibold">{selectedRenewal.service_name}</p>
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground">Type</h3>
-                    <p className="font-semibold capitalize">{selectedRenewal.serviceType}</p>
+                    <p className="font-semibold capitalize">{selectedRenewal.service_type}</p>
                   </div>
                 </div>
                 
@@ -359,13 +346,13 @@ const AdminRenewals: React.FC = () => {
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground">Start Date</h3>
                     <p className="font-semibold">
-                      {format(new Date(selectedRenewal.startDate), 'MMMM d, yyyy')}
+                      {format(new Date(selectedRenewal.start_date), 'MMMM d, yyyy')}
                     </p>
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground">End Date</h3>
                     <p className="font-semibold">
-                      {format(new Date(selectedRenewal.endDate), 'MMMM d, yyyy')}
+                      {format(new Date(selectedRenewal.end_date), 'MMMM d, yyyy')}
                     </p>
                   </div>
                 </div>
@@ -378,7 +365,7 @@ const AdminRenewals: React.FC = () => {
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground">Days Remaining</h3>
                     {(() => {
-                      const daysRemaining = getDaysRemaining(selectedRenewal.endDate);
+                      const daysRemaining = getDaysRemaining(selectedRenewal.end_date);
                       return (
                         <p className={cn(
                           "font-semibold flex items-center",
@@ -416,7 +403,7 @@ const AdminRenewals: React.FC = () => {
                 
                 <div>
                   <h3 className="text-sm font-medium text-muted-foreground">Reminder Type</h3>
-                  <p className="font-semibold capitalize">{selectedRenewal.reminderType}</p>
+                  <p className="font-semibold capitalize">{selectedRenewal.reminder_type}</p>
                 </div>
                 
                 {selectedRenewal.notes && (

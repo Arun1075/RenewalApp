@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, CheckCircle2, ClockIcon, DollarSign, AlertTriangle, Settings, LogOut, Plus, Edit } from 'lucide-react';
+import { Calendar, CheckCircle2, DollarSign, AlertTriangle, Settings, LogOut, Plus, Edit } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/button';
