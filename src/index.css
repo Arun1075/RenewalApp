@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    /* Base theme colors */
+    --background: 220 15% 95%;
+    --foreground: 220 20% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 20%;
+
+    /* Main theme - Vibrant purple */
+    --primary: 265 80% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 200 70% 45%;
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 320 80% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --muted: 220 15% 90%;
+    --muted-foreground: 220 20% 40%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 35 95% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --info: 195 85% 50%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 220 15% 85%;
+    --input: 220 15% 85%;
+    --ring: 265 80% 50%;
+
+    --radius: 0.6rem;
+    --radius-full: 9999px;
+
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Admin Dashboard theme */
+  .theme-admin-dashboard {
+    --primary: 265 80% 50%; /* Vibrant purple */
+    --secondary: 235 80% 55%; /* Blue-purple */
+    --accent: 290 70% 60%; /* Lavender */
+    --ring: 265 80% 50%;
+    --page-gradient: linear-gradient(135deg, hsl(265 80% 98%), hsl(235 80% 96%));
+  }
+  
+  /* Admin Renewals theme */
+  .theme-admin-renewals {
+    --primary: 215 85% 50%; /* Blue */
+    --secondary: 195 90% 45%; /* Cyan */
+    --accent: 225 70% 55%; /* Blue-violet */
+    --ring: 215 85% 50%;
+    --page-gradient: linear-gradient(135deg, hsl(215 85% 98%), hsl(195 90% 96%));
+  }
+  
+  /* User Dashboard theme */
+  .theme-user-dashboard {
+    --primary: 155 70% 40%; /* Teal */
+    --secondary: 175 80% 35%; /* Turquoise */
+    --accent: 130 60% 45%; /* Green */
+    --ring: 155 70% 40%;
+    --page-gradient: linear-gradient(135deg, hsl(155 70% 98%), hsl(175 80% 94%));
+  }
+  
+  /* Login theme */
+  .theme-login {
+    --primary: 340 85% 50%; /* Pink-Red */
+    --secondary: 360 85% 55%; /* Red */
+    --accent: 320 80% 55%; /* Pink */
+    --ring: 340 85% 50%;
+    --page-gradient: linear-gradient(135deg, hsl(340 85% 97%), hsl(360 85% 96%));
+  }
+ 
+  .dark {
+    /* Rich dark mode theme */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+ 
+    /* Vibrant purple in dark mode */
+    --primary: 265 80% 60%;
+    --primary-foreground: 0 0% 100%;
+ 
+    /* Bright blue in dark mode */
+    --secondary: 200 90% 55%;
+    --secondary-foreground: 0 0% 100%;
+ 
+    --muted: 217 33% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    /* Vibrant pink in dark mode */
+    --accent: 320 90% 65%;
+    --accent-foreground: 0 0% 100%;
+ 
+    --destructive: 0 80% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 80% 48%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 35 95% 55%;
+    --warning-foreground: 0 0% 100%;
+
+    --info: 195 90% 60%;
+    --info-foreground: 0 0% 100%;
+ 
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 265 80% 60%;
+    
+    /* Dark mode theme gradients */
+    .theme-admin-dashboard {
+      --page-gradient: linear-gradient(135deg, hsl(265 60% 15%), hsl(235 60% 12%));
+    }
+    
+    .theme-admin-renewals {
+      --page-gradient: linear-gradient(135deg, hsl(215 60% 15%), hsl(195 70% 12%));
+    }
+    
+    .theme-user-dashboard {
+      --page-gradient: linear-gradient(135deg, hsl(155 50% 15%), hsl(175 60% 12%));
+    }
+    
+    .theme-login {
+      --page-gradient: linear-gradient(135deg, hsl(340 60% 15%), hsl(360 60% 12%));
+    }
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    background-image: var(--page-gradient, linear-gradient(135deg, hsl(var(--primary) / 0.08), transparent));
+  }
+}
+
+a {
+  @apply text-primary hover:text-primary/90;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+h1 {
+  @apply text-4xl font-bold;
+  line-height: 1.1;
+}
+
+/* Enhanced styling for cards, buttons and grids */
+.gradient-card {
+  background-image: linear-gradient(to bottom right, hsla(var(--card), 1), hsla(var(--card), 0.9));
+  backdrop-filter: blur(8px);
+  border: 1px solid hsla(var(--border), 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gradient-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+button {
+  @apply transition-all duration-200;
+}
+
+.hover-effect {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid Layouts */
+.colorful-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.colorful-grid-compact {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+/* Pop-up styling */
+.colorful-popup {
+  background-color: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: fixed;
+}
+
+.colorful-popup::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)));
+}
+
+/* Color themes for specific sections */
+.theme-admin {
+  --section-color: 265 80% 50%;
+}
+
+.theme-renewals {
+  --section-color: 215 85% 50%;
+}
+
+.theme-user {
+  --section-color: 155 70% 40%;
+}
+
+.theme-auth {
+  --section-color: 340 85% 50%;
+}
+/* For Chrome, Safari, Edge */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Optional: remove extra padding */
+input[type="date"] {
+  padding-right: 2.5rem;
+}
+
