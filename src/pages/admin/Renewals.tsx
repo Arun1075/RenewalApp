@@ -283,8 +283,8 @@ const AdminRenewals: React.FC = () => {
             
             {selectedRenewal && (
               <div className="py-4">
-                <p className="font-medium">{selectedRenewal.service_name}</p>
-                <p className="text-sm text-muted-foreground">Provider: {selectedRenewal.provider}</p>
+                <p className="font-medium">{selectedRenewal.item_name}</p>
+                <p className="text-sm text-muted-foreground">Vendor: {selectedRenewal.vendor}</p>
                 <p className="text-sm text-muted-foreground">
                   Expires: {format(new Date(selectedRenewal.end_date), 'MMMM d, yyyy')}
                 </p>
@@ -328,18 +328,18 @@ const AdminRenewals: React.FC = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-sm font-medium text-muted-foreground">Service</h3>
-                    <p className="font-semibold">{selectedRenewal.service_name}</p>
+                    <h3 className="text-sm font-medium text-muted-foreground">Item</h3>
+                    <p className="font-semibold">{selectedRenewal.item_name}</p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-muted-foreground">Type</h3>
-                    <p className="font-semibold capitalize">{selectedRenewal.service_type}</p>
+                    <h3 className="text-sm font-medium text-muted-foreground">Category</h3>
+                    <p className="font-semibold capitalize">{selectedRenewal.category}</p>
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="text-sm font-medium text-muted-foreground">Provider</h3>
-                  <p className="font-semibold">{selectedRenewal.provider}</p>
+                  <h3 className="text-sm font-medium text-muted-foreground">Vendor</h3>
+                  <p className="font-semibold">{selectedRenewal.vendor}</p>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
@@ -402,8 +402,8 @@ const AdminRenewals: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h3 className="text-sm font-medium text-muted-foreground">Reminder Type</h3>
-                  <p className="font-semibold capitalize">{selectedRenewal.reminder_type}</p>
+                  <h3 className="text-sm font-medium text-muted-foreground">Reminder</h3>
+                  <p className="font-semibold">{selectedRenewal.reminder_days_before} days before expiration</p>
                 </div>
                 
                 {selectedRenewal.notes && (

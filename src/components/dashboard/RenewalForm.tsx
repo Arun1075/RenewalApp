@@ -39,13 +39,13 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
   const { currentUser } = useAuth();
   
   const [formData, setFormData] = useState<Partial<Renewal>>({
-    service_name: '',
-    service_type: 'domain',
-    provider: '',
+    item_name: '',
+    category: 'domain',
+    vendor: '',
     start_date: new Date().toISOString().split('T')[0],
     end_date: new Date(new Date().setMonth(new Date().getMonth() + 12)).toISOString().split('T')[0],
     cost: 0,
-    reminder_type: 'email',
+    reminder_days_before: 7,
     notes: '',
     user_id: '',
     status: 'active'
@@ -61,24 +61,24 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
         ...renewal,
         id: renewal.id,
         user_id: renewal.user_id || renewal.user_id,
-        service_name: renewal.service_name || renewal.service_name,
-        service_type: renewal.service_type || renewal.service_type,
+        item_name: renewal.item_name || renewal.item_name,
+        category: renewal.category || renewal.category,
         start_date: (renewal.start_date || renewal.start_date)?.split('T')[0] || '', 
         end_date: (renewal.end_date || renewal.end_date)?.split('T')[0] || '',
-        reminder_type: renewal.reminder_type || renewal.reminder_type
+        reminder_days_before: renewal.reminder_days_before || 7
       };
       
       setFormData(formattedRenewal);
     } else {
       // Reset form for new renewals
       setFormData({
-        service_name: '',
-        service_type: 'domain',
-        provider: '',
+        item_name: '',
+        category: 'domain',
+        vendor: '',
         start_date: new Date().toISOString().split('T')[0],
         end_date: new Date(new Date().setMonth(new Date().getMonth() + 12)).toISOString().split('T')[0],
         cost: 0,
-        reminder_type: 'email',
+        reminder_days_before: 7,
         notes: '',
         user_id: currentUser?.id || '',
         status: 'active'
@@ -89,12 +89,12 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
     
-    if (!formData.service_name?.trim()) {
-      newErrors.service_name = 'Service name is required';
+    if (!formData.item_name?.trim()) {
+      newErrors.item_name = 'Item name is required';
     }
     
-    if (!formData.provider?.trim()) {
-      newErrors.provider = 'Provider is required';
+    if (!formData.vendor?.trim()) {
+      newErrors.vendor = 'Vendor is required';
     }
     
     if (!formData.start_date) {
@@ -121,7 +121,7 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
     const { name, value } = e.target;
     
     // Parse numeric values
-    if (name === 'cost') {
+    if (name === 'cost' || name === 'reminder_days_before') {
       setFormData(prev => ({
         ...prev,
         [name]: parseFloat(value) || 0
@@ -195,26 +195,26 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="service_name">Service Name *</Label>
+              <Label htmlFor="item_name">Item Name *</Label>
               <Input
-                id="service_name"
-                name="service_name"
-                value={formData.service_name}
+                id="item_name"
+                name="item_name"
+                value={formData.item_name}
                 onChange={handleChange}
-                className={errors.service_name ? "border-destructive" : ""}
+                className={errors.item_name ? "border-destructive" : ""}
               />
-              {errors.service_name && (
-                <p className="text-xs text-destructive">{errors.service_name}</p>
+              {errors.item_name && (
+                <p className="text-xs text-destructive">{errors.item_name}</p>
               )}
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="service_type">Service Type *</Label>
+              <Label htmlFor="category">Category *</Label>
               <Select 
-                value={formData.service_type} 
-                onValueChange={(value) => handleSelectChange('service_type', value)}
+                value={formData.category} 
+                onValueChange={(value) => handleSelectChange('category', value)}
               >
-                <SelectTrigger className={errors.service_type ? "border-destructive" : ""}>
+                <SelectTrigger className={errors.category ? "border-destructive" : ""}>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -225,23 +225,23 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
-              {errors.service_type && (
-                <p className="text-xs text-destructive">{errors.service_type}</p>
+              {errors.category && (
+                <p className="text-xs text-destructive">{errors.category}</p>
               )}
             </div>
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="provider">Provider *</Label>
+            <Label htmlFor="vendor">Vendor *</Label>
             <Input
-              id="provider"
-              name="provider"
-              value={formData.provider}
+              id="vendor"
+              name="vendor"
+              value={formData.vendor}
               onChange={handleChange}
-              className={errors.provider ? "border-destructive" : ""}
+              className={errors.vendor ? "border-destructive" : ""}
             />
-            {errors.provider && (
-              <p className="text-xs text-destructive">{errors.provider}</p>
+            {errors.vendor && (
+              <p className="text-xs text-destructive">{errors.vendor}</p>
             )}
           </div>
           
@@ -304,21 +304,15 @@ const RenewalForm: React.FC<RenewalFormProps> = ({
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="reminder_type">Reminder Type</Label>
-              <Select 
-                value={formData.reminder_type} 
-                onValueChange={(value) => handleSelectChange('reminder_type', value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select reminder" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="email">Email</SelectItem>
-                  <SelectItem value="notification">Notification</SelectItem>
-                  <SelectItem value="both">Both</SelectItem>
-                  <SelectItem value="none">None</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="reminder_days_before">Reminder Days Before</Label>
+              <Input
+                id="reminder_days_before"
+                name="reminder_days_before"
+                type="number"
+                min="0"
+                value={formData.reminder_days_before}
+                onChange={handleChange}
+              />
             </div>
           </div>
           

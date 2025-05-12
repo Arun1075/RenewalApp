@@ -4,43 +4,43 @@
  
 @layer base {
   :root {
-    /* Base theme colors */
-    --background: 220 15% 95%;
-    --foreground: 220 20% 20%;
+    /* Professional theme colors based on requested palette */
+    --background: 210 20% 98%; /* #F8F9FA for page background */
+    --foreground: 210 10% 15%; /* #212529 for primary text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 20%;
+    --card: 0 0% 100%; /* #FFFFFF for cards and forms */
+    --card-foreground: 210 10% 15%; /* #212529 for primary text */
 
-    /* Main theme - Vibrant purple */
-    --primary: 265 80% 50%;
+    /* Main theme - Professional Blue */
+    --primary: 213 81% 53%; /* #2C7BE5 - blue for buttons, links, headers */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 70% 45%;
+    --secondary: 210 7% 46%; /* #6C757D - gray for muted UI and secondary elements */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 320 80% 55%;
+    --accent: 213 81% 45%; /* Slightly darker shade of primary for accents */
     --accent-foreground: 0 0% 100%;
 
-    --muted: 220 15% 90%;
-    --muted-foreground: 220 20% 40%;
+    --muted: 210 17% 98%;
+    --muted-foreground: 210 7% 46%; /* #6C757D for muted text */
 
-    --success: 142 70% 45%;
+    --success: 134 61% 41%; /* #28A745 - green for renewed statuses */
     --success-foreground: 0 0% 100%;
 
-    --warning: 35 95% 50%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 45 100% 51%; /* #FFC107 - yellow for upcoming expirations */
+    --warning-foreground: 0 0% 10%;
 
-    --destructive: 0 80% 50%;
+    --destructive: 354 70% 54%; /* #DC3545 - red for overdue or cancelled items */
     --destructive-foreground: 0 0% 100%;
 
-    --info: 195 85% 50%;
+    --info: 204 86% 53%;
     --info-foreground: 0 0% 100%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 85%;
-    --ring: 265 80% 50%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 213 81% 53%;
 
-    --radius: 0.6rem;
+    --radius: 0.5rem;
     --radius-full: 9999px;
 
     font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -50,99 +50,99 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Admin Dashboard theme */
+  /* Admin Dashboard theme - based on professional blue */
   .theme-admin-dashboard {
-    --primary: 265 80% 50%; /* Vibrant purple */
-    --secondary: 235 80% 55%; /* Blue-purple */
-    --accent: 290 70% 60%; /* Lavender */
-    --ring: 265 80% 50%;
-    --page-gradient: linear-gradient(135deg, hsl(265 80% 98%), hsl(235 80% 96%));
+    --primary: 213 81% 53%; /* #2C7BE5 */
+    --secondary: 210 7% 46%; /* #6C757D */
+    --accent: 213 81% 45%; 
+    --ring: 213 81% 53%;
+    --page-gradient: linear-gradient(135deg, hsl(213 81% 98%), hsl(210 20% 96%));
   }
   
-  /* Admin Renewals theme */
+  /* Admin Renewals theme - based on professional blue */
   .theme-admin-renewals {
-    --primary: 215 85% 50%; /* Blue */
-    --secondary: 195 90% 45%; /* Cyan */
-    --accent: 225 70% 55%; /* Blue-violet */
-    --ring: 215 85% 50%;
-    --page-gradient: linear-gradient(135deg, hsl(215 85% 98%), hsl(195 90% 96%));
+    --primary: 213 81% 53%; /* #2C7BE5 */
+    --secondary: 210 7% 46%; /* #6C757D */
+    --accent: 204 86% 53%;
+    --ring: 213 81% 53%;
+    --page-gradient: linear-gradient(135deg, hsl(213 81% 98%), hsl(204 86% 96%));
   }
   
-  /* User Dashboard theme */
+  /* User Dashboard theme - based on professional blue */
   .theme-user-dashboard {
-    --primary: 155 70% 40%; /* Teal */
-    --secondary: 175 80% 35%; /* Turquoise */
-    --accent: 130 60% 45%; /* Green */
-    --ring: 155 70% 40%;
-    --page-gradient: linear-gradient(135deg, hsl(155 70% 98%), hsl(175 80% 94%));
+    --primary: 213 81% 53%; /* #2C7BE5 */
+    --secondary: 210 7% 46%; /* #6C757D */
+    --accent: 215 65% 50%;
+    --ring: 213 81% 53%;
+    --page-gradient: linear-gradient(135deg, hsl(213 81% 98%), hsl(215 65% 94%));
   }
   
-  /* Login theme */
+  /* Login theme - based on professional blue */
   .theme-login {
-    --primary: 340 85% 50%; /* Pink-Red */
-    --secondary: 360 85% 55%; /* Red */
-    --accent: 320 80% 55%; /* Pink */
-    --ring: 340 85% 50%;
-    --page-gradient: linear-gradient(135deg, hsl(340 85% 97%), hsl(360 85% 96%));
+    --primary: 213 81% 53%; /* #2C7BE5 */
+    --secondary: 210 7% 46%; /* #6C757D */
+    --accent: 220 70% 50%;
+    --ring: 213 81% 53%;
+    --page-gradient: linear-gradient(135deg, hsl(213 81% 97%), hsl(220 70% 96%));
   }
  
   .dark {
-    /* Rich dark mode theme */
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    /* Dark professional theme */
+    --background: 210 10% 15%; /* Darker background */
+    --foreground: 210 20% 98%; /* Light text on dark background */
  
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 15% 20%; /* Dark card background */
+    --card-foreground: 210 20% 98%; /* Light text on dark cards */
  
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 15% 20%;
+    --popover-foreground: 210 20% 98%;
  
-    /* Vibrant purple in dark mode */
-    --primary: 265 80% 60%;
+    /* Blue in dark mode */
+    --primary: 213 81% 60%; /* Brighter primary for dark mode */
     --primary-foreground: 0 0% 100%;
  
-    /* Bright blue in dark mode */
-    --secondary: 200 90% 55%;
+    /* Gray in dark mode */
+    --secondary: 210 7% 56%; /* Lighter gray for dark mode */
     --secondary-foreground: 0 0% 100%;
  
-    --muted: 217 33% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 15% 25%;
+    --muted-foreground: 210 20% 80%;
  
-    /* Vibrant pink in dark mode */
-    --accent: 320 90% 65%;
+    /* Accent in dark mode */
+    --accent: 213 81% 65%;
     --accent-foreground: 0 0% 100%;
  
-    --destructive: 0 80% 55%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 354 70% 60%; /* #DC3545 brightened for dark mode */
+    --destructive-foreground: 210 20% 98%;
 
-    --success: 142 80% 48%;
+    --success: 134 61% 46%; /* #28A745 brightened for dark mode */
     --success-foreground: 0 0% 100%;
 
-    --warning: 35 95% 55%;
-    --warning-foreground: 0 0% 100%;
+    --warning: 45 100% 56%; /* #FFC107 brightened for dark mode */
+    --warning-foreground: 210 10% 15%;
 
-    --info: 195 90% 60%;
+    --info: 204 86% 60%; /* Brightened for dark mode */
     --info-foreground: 0 0% 100%;
  
-    --border: 217 33% 20%;
-    --input: 217 33% 20%;
-    --ring: 265 80% 60%;
+    --border: 210 15% 30%;
+    --input: 210 15% 30%;
+    --ring: 213 81% 60%;
     
     /* Dark mode theme gradients */
     .theme-admin-dashboard {
-      --page-gradient: linear-gradient(135deg, hsl(265 60% 15%), hsl(235 60% 12%));
+      --page-gradient: linear-gradient(135deg, hsl(213 50% 15%), hsl(210 50% 12%));
     }
     
     .theme-admin-renewals {
-      --page-gradient: linear-gradient(135deg, hsl(215 60% 15%), hsl(195 70% 12%));
+      --page-gradient: linear-gradient(135deg, hsl(213 50% 15%), hsl(204 50% 12%));
     }
     
     .theme-user-dashboard {
-      --page-gradient: linear-gradient(135deg, hsl(155 50% 15%), hsl(175 60% 12%));
+      --page-gradient: linear-gradient(135deg, hsl(213 50% 15%), hsl(215 50% 12%));
     }
     
     .theme-login {
-      --page-gradient: linear-gradient(135deg, hsl(340 60% 15%), hsl(360 60% 12%));
+      --page-gradient: linear-gradient(135deg, hsl(213 50% 15%), hsl(220 50% 12%));
     }
   }
 }
@@ -233,19 +233,19 @@ button {
 
 /* Color themes for specific sections */
 .theme-admin {
-  --section-color: 265 80% 50%;
+  --section-color: 213 81% 53%;
 }
 
 .theme-renewals {
-  --section-color: 215 85% 50%;
+  --section-color: 213 81% 53%;
 }
 
 .theme-user {
-  --section-color: 155 70% 40%;
+  --section-color: 213 81% 53%;
 }
 
 .theme-auth {
-  --section-color: 340 85% 50%;
+  --section-color: 213 81% 53%;
 }
 /* For Chrome, Safari, Edge */
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -260,5 +260,43 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Optional: remove extra padding */
 input[type="date"] {
   padding-right: 2.5rem;
+}
+
+/* Status-specific classes for renewals */
+.status-renewed {
+  @apply bg-success/10 text-success border-success/20;
+}
+
+.status-upcoming {
+  @apply bg-warning/10 text-warning/90 border-warning/20; 
+}
+
+.status-overdue {
+  @apply bg-destructive/10 text-destructive border-destructive/20;
+}
+
+.status-cancelled {
+  @apply bg-secondary/10 text-secondary/90 border-secondary/20;
+}
+
+.status-badge {
+  @apply px-2 py-1 rounded-md text-xs font-medium border;
+}
+
+/* Table row highlighting based on status */
+tr.row-renewed:hover td {
+  @apply bg-success/5;
+}
+
+tr.row-upcoming:hover td {
+  @apply bg-warning/5;
+}
+
+tr.row-overdue:hover td {
+  @apply bg-destructive/5;
+}
+
+tr.row-cancelled:hover td {
+  @apply bg-secondary/5;
 }
 

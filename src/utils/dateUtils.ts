@@ -86,15 +86,18 @@ export const snakeToCamelRenewal = (renewal: any) => {
   return {
     id: renewal.id,
     userId: renewal.user_id,
-    serviceName: renewal.service_name,
-    serviceType: renewal.service_type,
-    provider: renewal.provider,
+    serviceName: renewal.service_name || renewal.item_name,
+    serviceType: renewal.service_type || renewal.category,
+    provider: renewal.provider || renewal.vendor,
+    itemName: renewal.item_name || renewal.service_name,
+    category: renewal.category || renewal.service_type,
+    vendor: renewal.vendor || renewal.provider,
     startDate: renewal.start_date,
     endDate: renewal.end_date,
     cost: renewal.cost,
     status: renewal.status,
     notes: renewal.notes,
-    reminderType: renewal.reminder_type
+    reminderDaysBefore: renewal.reminder_days_before || 7
   };
 };
 
@@ -107,14 +110,14 @@ export const camelToSnakeRenewal = (renewal: any) => {
   return {
     id: renewal.id,
     user_id: renewal.userId || renewal.user_id || null,
-    service_name: renewal.serviceName || renewal.service_name || '',
-    service_type: renewal.serviceType || renewal.service_type || 'other',
-    provider: renewal.provider || '',
+    item_name: renewal.itemName || renewal.item_name || '',
+    category: renewal.category || renewal.category || 'other',
+    vendor: renewal.vendor || renewal.provider || '',
     start_date: formatDateForAPI(renewal.startDate || renewal.start_date),
     end_date: formatDateForAPI(renewal.endDate || renewal.end_date),
     cost: typeof renewal.cost === 'string' ? parseFloat(renewal.cost) || 0 : renewal.cost || 0,
     status: renewal.status || 'active',
     notes: renewal.notes || '',
-    reminder_type: renewal.reminderType || renewal.reminder_type || 'email'
+    reminder_days_before: renewal.reminderDaysBefore || renewal.reminder_days_before || 7
   };
 };

@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, CheckCircle2, DollarSign, AlertTriangle, Settings, LogOut, Plus, Edit } from 'lucide-react';
+import { 
+  Calendar, 
+  CheckCircle2, 
+  DollarSign, 
+  AlertTriangle, 
+  Settings, 
+  LogOut, 
+  Plus, 
+  Edit,
+  Bell,
+  History,
+  LayoutDashboard
+} from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/button';
 import RenewalsTable from '../../components/dashboard/RenewalsTable';
 import RenewalForm from '../../components/dashboard/RenewalForm';
+import ReminderLog from '../../components/dashboard/ReminderLog';
+import RenewalLogs from '../../components/dashboard/RenewalLogs';
 import StatsCard from '../../components/dashboard/StatsCard';
+import DashboardSummary from '../../components/dashboard/DashboardSummary';
 import { format } from 'date-fns';
 import { cn } from '../../lib/utils';
 import renewalService from '../../services/renewalService';
@@ -39,6 +54,7 @@ const UserDashboard: React.FC = () => {
     totalCost: 0 
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'reminders' | 'logs'>('dashboard');
   
   // Load user renewals on component mount or when currentUser changes
   useEffect(() => {
@@ -219,6 +235,126 @@ const UserDashboard: React.FC = () => {
     }
   };
 
+  // Render content based on active tab
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'reminders':
+        return (
+          <div className="space-y-6">
+            <ReminderLog 
+              isLoading={isLoading}
+              onFetchLogs={async (filters) => {
+                // This would be implemented to fetch reminder logs with filters
+                console.log("Fetching reminder logs with filters:", filters);
+                // Actual API call would be implemented here
+              }}
+              onSettingsChange={async (settings) => {
+                // This would be implemented to update notification settings
+                console.log("Updating notification settings:", settings);
+                toast.success("Notification settings updated");
+                // Actual API call would be implemented here
+              }}
+            />
+          </div>
+        );
+        
+      case 'logs':
+        return (
+          <div className="space-y-6">
+            <div className="bg-card border border-border rounded-[var(--radius)] p-6">
+              <h3 className="text-lg font-medium mb-4">Your Renewal Activity</h3>
+              <p className="text-muted-foreground mb-4">
+                Track all activity related to your renewals.
+              </p>
+              
+              <div className="grid md:grid-cols-1 gap-6">
+                {!isLoading && renewals.length > 0 ? (
+                  renewals.slice(0, 3).map(renewal => (
+                    <div key={renewal.id} className="border border-border rounded-lg p-4">
+                      <h4 className="font-medium mb-2">{renewal.item_name}</h4>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {renewal.vendor} • {renewal.category}
+                      </p>
+                      <RenewalLogs renewalId={renewal.id} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8">
+                    <History className="h-8 w-8 mx-auto mb-2 opacity-40" />
+                    <p>No renewals available to show logs</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+        
+      case 'dashboard':
+      default:
+        return (
+          <>
+            {/* Dashboard Summary */}
+            <DashboardSummary />
+            
+            {/* Stats cards */}
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
+              <StatsCard
+                title="Total Renewals"
+                value={stats.total}
+                icon={Calendar}
+                description="Your tracked services"
+              />
+              <StatsCard
+                title="Active Renewals"
+                value={stats.active}
+                icon={CheckCircle2}
+                description="Currently active services"
+              />
+              <StatsCard
+                title="Expiring Soon"
+                value={stats.expiringSoon}
+                icon={AlertTriangle}
+                description="Services expiring this month"
+              />
+              <StatsCard
+                title="Total Cost"
+                value={`$${stats.totalCost}`}
+                icon={DollarSign}
+                description="Monthly renewal expenses"
+              />
+            </div>
+            
+            {/* Renewals table */}
+            <div className="border rounded-lg p-6 bg-card">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-lg font-semibold">Your Renewals</h3>
+                <Button onClick={() => setIsAddFormOpen(true)}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add New Renewal
+                </Button>
+              </div>
+            
+              {isLoading ? (
+                <div className="text-center py-8">Loading your renewals...</div>
+              ) : renewals.length === 0 ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  <p>You don't have any renewals yet.</p>
+                  <p className="mt-2">Click "Add New Renewal" to create your first one.</p>
+                </div>
+              ) : (
+                <RenewalsTable 
+                  renewals={renewals}
+                  onRenewalClick={handleView}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              )}
+            </div>
+          </>
+        );
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -246,67 +382,55 @@ const UserDashboard: React.FC = () => {
       
       {/* Main content */}
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
+        <div className="mb-4">
           <h2 className="text-2xl font-bold">Your Dashboard</h2>
           <p className="text-muted-foreground">
             Manage your service renewals and subscriptions
           </p>
         </div>
-        
-        {/* Stats cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-          <StatsCard
-            title="Total Renewals"
-            value={stats.total}
-            icon={Calendar}
-            description="Your tracked services"
-          />
-          <StatsCard
-            title="Active Renewals"
-            value={stats.active}
-            icon={CheckCircle2}
-            description="Currently active services"
-          />
-          <StatsCard
-            title="Expiring Soon"
-            value={stats.expiringSoon}
-            icon={AlertTriangle}
-            description="Services expiring this month"
-          />
-          <StatsCard
-            title="Total Cost"
-            value={`$${stats.totalCost}`}
-            icon={DollarSign}
-            description="Monthly renewal expenses"
-          />
+
+        {/* Tab navigation */}
+        <div className="flex border-b border-border mb-6">
+          <button
+            className={cn(
+              "px-4 py-2 font-medium text-sm -mb-px",
+              activeTab === 'dashboard'
+                ? "border-b-2 border-primary text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            <LayoutDashboard className="w-4 h-4 inline mr-2" />
+            Dashboard
+          </button>
+          <button
+            className={cn(
+              "px-4 py-2 font-medium text-sm -mb-px",
+              activeTab === 'reminders'
+                ? "border-b-2 border-primary text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+            onClick={() => setActiveTab('reminders')}
+          >
+            <Bell className="w-4 h-4 inline mr-2" />
+            Reminder Logs
+          </button>
+          <button
+            className={cn(
+              "px-4 py-2 font-medium text-sm -mb-px",
+              activeTab === 'logs'
+                ? "border-b-2 border-primary text-primary"
+                : "text-muted-foreground hover:text-foreground"
+            )}
+            onClick={() => setActiveTab('logs')}
+          >
+            <History className="w-4 h-4 inline mr-2" />
+            Renewal Logs
+          </button>
         </div>
         
-        {/* Renewals table */}
-        <div className="border rounded-lg p-6 bg-card">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-semibold">Your Renewals</h3>
-            <Button onClick={() => setIsAddFormOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add New Renewal
-            </Button>
-          </div>
-          
-          {isLoading ? (
-            <div className="text-center py-8">Loading your renewals...</div>
-          ) : renewals.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              <p>You don't have any renewals yet.</p>
-              <p className="mt-2">Click "Add New Renewal" to create your first one.</p>
-            </div>
-          ) : (
-            <RenewalsTable 
-              renewals={renewals}
-              onRenewalClick={handleView}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          )}
-        </div>
+        {/* Tab content */}
+        {renderContent()}
         
         {/* Add Renewal Form */}
         <RenewalForm 
@@ -342,8 +466,7 @@ const UserDashboard: React.FC = () => {
             
             {selectedRenewal && (
               <div className="py-4">
-                <p className="font-medium">{selectedRenewal.service_name }</p>
-                <p className="text-sm text-muted-foreground">Provider: {selectedRenewal.provider}</p>
+                <p className="font-medium">{selectedRenewal.item_name}</p>
                 <p className="text-sm text-muted-foreground">
                   Expires: {format(new Date(selectedRenewal.end_date), 'MMMM d, yyyy')}
                 </p>
@@ -372,18 +495,18 @@ const UserDashboard: React.FC = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-sm font-medium text-muted-foreground">Service</h3>
-                    <p className="font-semibold">{selectedRenewal.service_name}</p>
+                    <h3 className="text-sm font-medium text-muted-foreground">Item</h3>
+                    <p className="font-semibold">{selectedRenewal.item_name}</p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-medium text-muted-foreground">Type</h3>
-                    <p className="font-semibold capitalize">{selectedRenewal.service_type}</p>
+                    <h3 className="text-sm font-medium text-muted-foreground">Category</h3>
+                    <p className="font-semibold capitalize">{selectedRenewal.category}</p>
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="text-sm font-medium text-muted-foreground">Provider</h3>
-                  <p className="font-semibold">{selectedRenewal.provider}</p>
+                  <h3 className="text-sm font-medium text-muted-foreground">Vendor</h3>
+                  <p className="font-semibold">{selectedRenewal.vendor}</p>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
@@ -439,8 +562,8 @@ const UserDashboard: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h3 className="text-sm font-medium text-muted-foreground">Reminder Type</h3>
-                  <p className="font-semibold capitalize">{selectedRenewal.reminder_type}</p>
+                  <h3 className="text-sm font-medium text-muted-foreground">Reminder</h3>
+                  <p className="font-semibold">{selectedRenewal.reminder_days_before} days before expiration</p>
                 </div>
                 
                 {selectedRenewal.notes && (

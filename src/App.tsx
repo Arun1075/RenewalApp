@@ -6,6 +6,7 @@ import AdminDashboard from './pages/admin/Dashboard'
 import AdminRenewals from './pages/admin/Renewals'
 import UserDashboard from './pages/user/Dashboard'
 import { useAuth } from './contexts/AuthContext'
+import { ToasterProvider } from './components/ui/notification'
 import type { ReactNode } from 'react'
 
 interface ProtectedRouteProps {
@@ -40,6 +41,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <ToasterProvider />
         <Routes>
           {/* Auth routes */}
           <Route path="/login" element={<Login />} />

@@ -12,15 +12,15 @@ export interface User {
 export interface Renewal {
   id: string;
   user_id: string;
-  service_name: string;
-  service_type: 'domain' | 'antivirus' | 'hosting' | 'software' | 'other';
-  provider: string;
+  item_name: string;
+  category: 'domain' | 'antivirus' | 'hosting' | 'software' | 'other';
+  vendor: string;
   start_date: string;
   end_date: string;
   cost: number;
   status: 'active' | 'expiring-soon' | 'expired';
   notes?: string;
-  reminder_type: 'email' | 'notification' | 'both' | 'none';
+  reminder_days_before: number;
 }
 
 // API response interfaces
@@ -41,12 +41,29 @@ export interface RenewalStats {
 
 // Renewal filters
 export interface RenewalFilters {
-  service_type?: Renewal['service_type'];
+  category?: Renewal['category'];
   status?: Renewal['status'];
-  provider?: string;
+  vendor?: string;
   search?: string;
   dateRange?: {
     start?: Date;
     end?: Date;
   };
+}
+
+// Renewal Log interface
+export interface RenewalLog {
+  id: string;
+  renewal_id: string;
+  service_name?: string;
+  action: 'created' | 'updated' | 'deleted' | 'status_changed' | 'renewed';
+  performed_by: string;
+  user_email?: string;
+  timestamp: string;
+  changes?: {
+    field: string;
+    old_value?: string | number;
+    new_value?: string | number;
+  }[];
+  notes?: string;
 }

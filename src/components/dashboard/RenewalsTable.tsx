@@ -52,9 +52,9 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
   // Filter renewals by search term and status
   const filteredRenewals = renewals.filter((renewal) => {
     const matchesSearch = 
-      renewal.service_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      renewal.provider.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      renewal.service_type.toLowerCase().includes(searchTerm.toLowerCase());
+      renewal.item_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      renewal.vendor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      renewal.category.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesStatus = 
       statusFilter === 'all' || 
@@ -69,14 +69,14 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
       const dateA = new Date(a.end_date).getTime();
       const dateB = new Date(b.end_date).getTime();
       return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-    } else if (sortBy === 'serviceName') {
+    } else if (sortBy === 'itemName') {
       return sortDirection === 'asc'
-        ? a.service_name.localeCompare(b.service_name)
-        : b.service_name.localeCompare(a.service_name);
-    } else if (sortBy === 'provider') {
+        ? a.item_name.localeCompare(b.item_name)
+        : b.item_name.localeCompare(a.item_name);
+    } else if (sortBy === 'vendor') {
       return sortDirection === 'asc'
-        ? a.provider.localeCompare(b.provider)
-        : b.provider.localeCompare(a.provider);
+        ? a.vendor.localeCompare(b.vendor)
+        : b.vendor.localeCompare(a.vendor);
     } else if (sortBy === 'cost') {
       return sortDirection === 'asc'
         ? a.cost - b.cost
@@ -205,13 +205,13 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
                 <span>Expiration Date</span>
                 {getSortIndicator('endDate')}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSort('serviceName')} className="flex justify-between">
-                <span>Service Name</span>
-                {getSortIndicator('serviceName')}
+              <DropdownMenuItem onClick={() => handleSort('itemName')} className="flex justify-between">
+                <span>Item Name</span>
+                {getSortIndicator('itemName')}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleSort('provider')} className="flex justify-between">
-                <span>Provider</span>
-                {getSortIndicator('provider')}
+              <DropdownMenuItem onClick={() => handleSort('vendor')} className="flex justify-between">
+                <span>Vendor</span>
+                {getSortIndicator('vendor')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => handleSort('cost')} className="flex justify-between">
                 <span>Cost</span>
@@ -230,21 +230,21 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
               <th
                 scope="col"
                 className="px-6 py-3.5 text-left text-xs font-medium text-primary uppercase tracking-wider cursor-pointer hover:bg-primary/10 transition-colors"
-                onClick={() => handleSort('serviceName')}
+                onClick={() => handleSort('itemName')}
               >
                 <div className="flex items-center">
-                  <span>Service Name</span>
-                  {getSortIndicator('serviceName')}
+                  <span>Item</span>
+                  {getSortIndicator('itemName')}
                 </div>
               </th>
               <th
                 scope="col"
                 className="px-6 py-3.5 text-left text-xs font-medium text-primary uppercase tracking-wider cursor-pointer hover:bg-primary/10 transition-colors"
-                onClick={() => handleSort('provider')}
+                onClick={() => handleSort('vendor')}
               >
                 <div className="flex items-center">
-                  <span>Provider</span>
-                  {getSortIndicator('provider')}
+                  <span>Vendor</span>
+                  {getSortIndicator('vendor')}
                 </div>
               </th>
               <th
@@ -290,13 +290,13 @@ const RenewalsTable: React.FC<RenewalsTableProps> = ({
                   onClick={() => onRenewalClick && onRenewalClick(renewal)}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="font-medium group-hover:text-primary transition-colors">{renewal.service_name}</div>
+                    <div className="font-medium group-hover:text-primary transition-colors">{renewal.item_name}</div>
                     <div className="text-xs text-muted-foreground capitalize">
-                      {renewal.service_type}
+                      {renewal.category}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {renewal.provider}
+                    {renewal.vendor}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="font-medium">{formatDate(renewal.end_date)}</div>

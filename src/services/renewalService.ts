@@ -1,5 +1,5 @@
 import api from './api';
-import type { Renewal, ApiResponse, RenewalStats } from '../types';
+import type { Renewal, ApiResponse, RenewalStats, RenewalLog } from '../types';
 import { camelToSnakeRenewal } from '../utils/dateUtils';
 
 // Helper function to normalize API responses from different Laravel response formats
@@ -233,6 +233,47 @@ const renewalService = {
       total: renewals.length,
       totalCost
     };
+  },
+
+  /**
+   * Get logs for a specific renewal
+   * @param id Renewal ID
+   * @returns Promise with renewal logs array
+   */
+  getRenewalLogs: async (id: string): Promise<ApiResponse<RenewalLog[]>> => {
+    try {
+      console.log(`Fetching logs for renewal with ID: ${id}`);
+      const response = await api.get(`/renewals/${id}/logs`);
+      console.log(`Renewal ${id} logs response:`, response.data);
+      return normalizeResponse<RenewalLog[]>(response.data);
+    } catch (error) {
+      console.error(`Error fetching logs for renewal with ID ${id}:`, error);
+      return {
+        data: [],
+        success: false,
+        message: `Failed to fetch logs for renewal with ID ${id}`
+      };
+    }
+  },
+
+  /**
+   * Get renewal logs
+   * @returns Promise with array of reminder logs
+   */
+  getReminderLogs: async (): Promise<ApiResponse<RenewalLog[]>> => {
+    try {
+      console.log('Fetching reminder logs');
+      const response = await api.get('/api/reminders/log');
+      console.log('Reminder logs response:', response.data);
+      return normalizeResponse<RenewalLog[]>(response.data);
+    } catch (error) {
+      console.error('Error fetching reminder logs:', error);
+      return {
+        data: [],
+        success: false,
+        message: 'Failed to fetch reminder logs'
+      };
+    }
   }
 };
 
